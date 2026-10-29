@@ -1,0 +1,28 @@
+[
+  {
+    "id": "friendship",
+    "name": "Organic Sourdough Friendship Bread",
+    "description": "Soft, lightly sweet, slow-fermented. The regular loaf.",
+    "suggestedPrice": 10,
+    "available": true,
+    "order": 1
+  },
+  {
+    "id": "sourdough",
+    "name": "Sourdough",
+    "description": "A plain sourdough loaf. Chewy crust, open crumb, no sugar.",
+    "suggestedPrice": null,
+    "available": true,
+    "order": 2
+  },
+  {
+    "id": "yeast-spread",
+    "name": "Yeast Spread",
+    "description": "",
+    "suggestedPrice": null,
+    "available": true,
+    "order": 3,
+    "unit": "jar",
+    "unitPlural": "jars"
+  }
+]

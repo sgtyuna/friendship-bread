@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Friendship Bread</title>
+<meta name="description" content="Pay-what-you-can organic friendship bread from a home kitchen in Roane County, Tennessee.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: one left-aligned reading column; the hand-lettered sign is the hero, propped at a slight angle like it sits on the pickup table. Three pay-what-you-can cards and a product list break up the prose; a floating "Ask for a loaf" button on phones. */
+:root {
+  --bg: #f2f0ea;
+  --fg: #241f19;
+  --muted: #6b645a;
+  --panel: #e7e3d9;
+  --panel-2: #ddd8cb;
+  --line: #d3cdbf;
+  --accent: #2b5c7a;
+  --accent-fg: #ffffff;
+  --board: #2a2622;
+  --chalk: #f4efe6;
+  --chalk-dim: #d9d1c3;
+  --display: "Young Serif", Georgia, "Times New Roman", serif;
+  --body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171411; --fg: #ece6da; --muted: #a39b8e; --panel: #221e1a; --panel-2: #2b2621; --line: #3a342d;
+    --accent: #8fb9d6; --accent-fg: #14212b; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171411; --fg: #ece6da; --muted: #a39b8e; --panel: #221e1a; --panel-2: #2b2621; --line: #3a342d;
+  --accent: #8fb9d6; --accent-fg: #14212b; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 5rem;
+}
+main { max-width: 44rem; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.6rem); }
+h2 { font-size: 1.5rem; margin-bottom: .9rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0; max-width: 36rem; }
+.stack { display: grid; gap: .9rem; }
+section { padding-block: 2.5rem; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: 0; }
+.eyebrow { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.muted { color: var(--muted); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Hero */
+.hero { padding-block: 2.25rem 1.5rem; display: grid; gap: 1.75rem; }
+@media (min-width: 720px) { .hero { grid-template-columns: 1fr 1fr; align-items: center; } .hero .notice { grid-column: 1 / -1; } }
+.sign {
+  background: var(--board); color: var(--chalk);
+  border-radius: 6px; padding: 1.6rem 1.4rem 1.3rem;
+  font-family: var(--hand); text-align: center;
+  transform: rotate(-1.2deg); max-width: 26rem; width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18), inset 0 0 0 6px var(--board), inset 0 0 0 8px var(--chalk-dim);
+}
+.sign .top { font-size: clamp(1.5rem, 5.5vw, 2rem); font-weight: 700; line-height: 1.1; letter-spacing: .02em; }
+.sign .mid { font-size: clamp(2rem, 8vw, 2.9rem); font-weight: 700; line-height: 1.05; margin-top: .6rem; }
+.sign .bottom { font-size: 1.25rem; color: var(--chalk-dim); margin-top: .7rem; }
+.sign .rule { width: 50%; height: 2px; margin: .6rem auto 0; background: var(--chalk-dim); opacity: .6; border-radius: 2px; }
+.notice {
+  background: var(--panel); border-left: 4px solid var(--accent); padding: .8rem 1rem; border-radius: 0 6px 6px 0;
+  font-size: .98rem; display: grid; gap: .15rem;
+}
+.notice .eyebrow { color: var(--accent); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .25rem; }
+
+/* Pay cards */
+.cards { display: grid; gap: .8rem; grid-template-columns: repeat(3, 1fr); margin-top: 1.25rem; }
+@media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border-radius: 8px; padding: 1rem 1rem 1.1rem; display: grid; gap: .4rem; align-content: start; min-width: 0; }
+.card .amt { font-family: var(--hand); font-size: 2rem; line-height: 1; font-weight: 700; color: var(--accent); }
+.card h3 { font-size: 1rem; }
+.card p { font-size: .93rem; color: var(--muted); }
+
+/* Lists */
+ul.plain { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem .6rem; }
+ul.plain li { background: var(--panel); border-radius: 999px; padding: .25rem .8rem; font-size: .92rem; }
+ol.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: .5rem; max-width: 36rem; }
+ul.places { margin: 0; padding-left: 1.2rem; display: grid; gap: .35rem; }
+
+/* Products */
+.breads { display: grid; gap: 0; margin-top: 1.5rem; border-top: 1px solid var(--line); }
+.bread { display: grid; grid-template-columns: 1fr auto; gap: .2rem 1rem; align-items: baseline; padding: .95rem 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.bread .name { font-family: var(--display); font-size: 1.12rem; }
+.bread .price { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); font-size: .95rem; }
+.bread .desc { grid-column: 1 / -1; color: var(--muted); font-size: .95rem; }
+.bread.off .name, .bread.off .price, .bread.off .desc { opacity: .55; }
+.bread .pill { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; background: var(--panel-2); border-radius: 999px; padding: .15rem .6rem; color: var(--fg); }
+
+/* FAQ */
+.faq { display: grid; gap: .25rem; }
+details { border-top: 1px solid var(--line); padding: .65rem 0; }
+details:last-child { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent); font-weight: 700; flex: none; }
+details[open] summary::after { content: "\2013"; }
+details p { margin-top: .5rem; color: var(--muted); font-size: .97rem; }
+
+/* Ask box */
+.ask { background: var(--panel); border-radius: 8px; padding: 1.25rem; display: grid; gap: .9rem; scroll-margin-top: 1rem; }
+.ask label { display: grid; gap: .3rem; font-size: .92rem; font-weight: 700; }
+.ask input, .ask textarea, .ask select {
+  font: inherit; font-weight: 400; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: .55rem .7rem; width: 100%; min-width: 0;
+}
+.ask textarea { min-height: 4.5rem; resize: vertical; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+@media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+button {
+  font: inherit; font-weight: 700; cursor: pointer;
+  background: var(--accent); color: var(--accent-fg); border: 0; border-radius: 6px; padding: .65rem 1.1rem;
+}
+button.quiet { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.msg {
+  white-space: pre-wrap; background: var(--bg); border: 1px dashed var(--line); border-radius: 6px;
+  padding: .8rem .9rem; font-size: .96rem; line-height: 1.5;
+}
+.contact { display: grid; gap: .3rem; }
+.contact .value { font-size: 1.15rem; font-weight: 700; user-select: all; word-break: break-word; }
+.actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.status { font-size: .9rem; color: var(--muted); }
+
+/* Floating ask button (phones) */
+.float {
+  position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 5; box-shadow: 0 6px 20px rgba(0,0,0,.25); border-radius: 999px; padding: .75rem 1.2rem; text-decoration: none;
+  background: var(--accent); color: var(--accent-fg); font-weight: 700;
+}
+@media (min-width: 720px) { .float { display: none; } }
+
+footer { color: var(--muted); font-size: .88rem; padding-top: 2rem; border-top: 1px solid var(--line); display: grid; gap: .9rem; max-width: 40rem; }
+footer .actions { gap: .8rem; }
+.loading { color: var(--muted); font-style: italic; }
+@media (prefers-reduced-motion: no-preference) {
+  .sign { transition: transform .4s ease; }
+  .sign:hover { transform: rotate(0deg); }
+}
+</style>
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<main>
+  <section class="hero">
+    <div class="sign" id="sign" aria-label="Hand-lettered sign">
+      <div class="top" id="signTop">&nbsp;</div>
+      <div class="rule"></div>
+      <div class="mid" id="signMiddle">&nbsp;</div>
+      <div class="bottom" id="signBottom">&nbsp;</div>
+    </div>
+    <div class="stack">
+      <p class="eyebrow" id="place" hidden></p>
+      <h1 id="headline">Friendship Bread</h1>
+      <p id="intro" class="loading">Loading the bread page…</p>
+      <div class="hero-actions">
+        <a href="#ask" class="quiet" role="button" id="heroAsk" style="display:inline-block;padding:.6rem 1rem;border:1px solid var(--accent);border-radius:6px;text-decoration:none;font-weight:700">Ask for a loaf</a>
+      </div>
+    </div>
+    <div class="notice" id="thisWeekWrap" hidden>
+      <span class="eyebrow">This week</span>
+      <span id="thisWeek"></span>
+    </div>
+  </section>
+
+  <section id="paySection">
+    <h2 id="payTitle">Pay what you can</h2>
+    <div class="stack" id="payBody"></div>
+    <div class="cards" id="payCards"></div>
+  </section>
+
+  <section id="breadSection">
+    <h2 id="breadTitle">What I bake</h2>
+    <div class="stack" id="breadBody"></div>
+    <div class="breads" id="breads"></div>
+    <p class="eyebrow" style="margin-top:1.5rem;margin-bottom:.5rem" id="ingLabel" hidden>In the friendship bread</p>
+    <ul class="plain" id="ingredients"></ul>
+  </section>
+
+  <section id="getSection">
+    <h2 id="getTitle">How to get a loaf</h2>
+    <ol class="steps" id="getSteps"></ol>
+    <div id="pickupWrap" hidden style="margin-top:1.5rem">
+      <h3 id="pickupTitle" style="margin-bottom:.5rem">Pickup</h3>
+      <ul class="plain" id="pickupSpots"></ul>
+      <p class="muted" id="pickupNote" style="font-size:.95rem;margin-top:.6rem"></p>
+    </div>
+    <div id="whereWrap" hidden style="margin-top:1.25rem">
+      <p class="eyebrow" style="margin-bottom:.5rem">Where to find me</p>
+      <ul class="places" id="whereToFind"></ul>
+    </div>
+
+    <form class="ask" id="askForm" style="margin-top:1.5rem" autocomplete="on">
+      <div id="ask">
+        <p class="eyebrow">Ask for a loaf</p>
+        <p class="muted" style="font-size:.95rem" id="askIntro">Fill this in, then send me the message. I'll write back to set the day.</p>
+      </div>
+      <div class="row">
+        <label>Your name<input id="askName" name="name" type="text" placeholder="First name is fine" autocomplete="name"></label>
+        <label>How many<input id="askCount" name="count" type="number" min="1" max="12" value="1" inputmode="numeric"></label>
+      </div>
+      <label>How should I reach you back?<input id="askReply" name="reply" type="text" placeholder="Email or phone number" autocomplete="email"></label>
+      <label id="askWhichWrap" hidden>Which one<select id="askWhich" name="which"></select></label>
+      <div class="row">
+        <label>Which week?<input id="askWhen" name="when" type="text" placeholder="The week of…"><span class="status" id="noticeHint" style="font-weight:400"></span></label>
+        <label id="askSpotWrap" hidden>Pickup spot<select id="askSpot" name="spot"></select></label>
+      </div>
+      <label>Anything else<textarea id="askNote" name="note" placeholder="Allergies, a question, or how you'd like to pick up"></textarea></label>
+      <div class="msg" id="askMsg" aria-live="polite"></div>
+      <input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
+      <div class="actions">
+        <button type="submit" id="sendBtn" hidden>Send to Kathleen</button>
+        <a id="emailBtn" href="#" hidden style="display:inline-block;background:var(--accent);color:var(--accent-fg);border-radius:6px;padding:.65rem 1.1rem;font-weight:700;text-decoration:none">Send by email</a>
+        <button type="button" class="quiet" id="copyBtn">Copy message</button>
+        <span class="status" id="copyStatus" role="status"></span>
+      </div>
+      <div class="notice" id="sentBox" hidden>
+        <span class="eyebrow">Sent</span>
+        <span id="sentText">Got it. Kathleen will write back to set the day and the spot.</span>
+      </div>
+      <div class="contact" id="contact" hidden>
+        <span class="eyebrow" id="contactLabel"></span>
+        <span class="value" id="contactValue"></span>
+        <div class="actions"><button type="button" class="quiet" id="copyAddrBtn" style="padding:.4rem .8rem;font-size:.9rem">Copy address</button><span class="status" id="addrStatus"></span></div>
+        <p class="muted" style="font-size:.88rem">If the email button doesn't open anything on your phone, copy the message and the address and send it yourself.</p>
+      </div>
+      <p class="muted" id="contactFallback" style="font-size:.92rem" hidden>Send it to me wherever you found this page, or ask in person.</p>
+    </form>
+  </section>
+
+  <section id="faqSection" hidden>
+    <h2 id="faqTitle">Good to know</h2>
+    <div class="faq" id="faq"></div>
+  </section>
+
+  <section id="aboutSection">
+    <h2 id="aboutTitle">About</h2>
+    <div class="stack" id="aboutBody"></div>
+  </section>
+
+  <footer>
+    <p id="footerNote"></p>
+    <div class="actions">
+      <button type="button" class="quiet" id="shareBtn">Copy a link to this page</button>
+      <span class="status" id="shareStatus"></span>
+    </div>
+  </footer>
+</main>
+<a href="#ask" class="float" id="floatAsk">Ask for a loaf</a>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  let site = null;
+  let breads = [];
+
+  function paras(el, arr) {
+    el.replaceChildren();
+    (arr || []).forEach((t) => { const p = document.createElement('p'); p.textContent = t; el.appendChild(p); });
+  }
+  function items(el, arr, tag) {
+    el.replaceChildren();
+    (arr || []).forEach((t) => { const li = document.createElement(tag || 'li'); li.textContent = t; el.appendChild(li); });
+  }
+
+  function renderSite() {
+    if (!site) return;
+    $('signTop').textContent = site.signTop || '';
+    $('signMiddle').textContent = site.signMiddle || '';
+    $('signBottom').textContent = site.signBottom || '';
+    $('headline').textContent = site.headline || 'Friendship Bread';
+    document.title = site.headline || 'Friendship Bread';
+    const place = (site.place || '').trim();
+    $('place').textContent = place; $('place').hidden = !place;
+    $('intro').textContent = site.intro || '';
+    $('intro').classList.remove('loading');
+
+    const tw = (site.thisWeek || '').trim();
+    $('thisWeek').textContent = tw; $('thisWeekWrap').hidden = !tw;
+
+    $('payTitle').textContent = site.payTitle || 'Pay what you can';
+    paras($('payBody'), site.payBody);
+    const cards = $('payCards'); cards.replaceChildren();
+    (site.payCards || []).forEach((c) => {
+      const d = document.createElement('div'); d.className = 'card';
+      const a = document.createElement('div'); a.className = 'amt'; a.textContent = c.amount || '';
+      const h = document.createElement('h3'); h.textContent = c.title || '';
+      const p = document.createElement('p'); p.textContent = c.body || '';
+      d.append(a, h, p); cards.appendChild(d);
+    });
+    cards.hidden = (site.payCards || []).length === 0;
+
+    $('breadTitle').textContent = site.breadTitle || 'What I bake';
+    paras($('breadBody'), site.breadBody);
+    const ing = site.ingredients || [];
+    $('ingLabel').hidden = ing.length === 0;
+    $('ingLabel').textContent = site.ingredientsLabel || 'In the friendship bread';
+    items($('ingredients'), ing);
+
+    $('getTitle').textContent = site.getTitle || 'How to get a loaf';
+    items($('getSteps'), site.getSteps);
+    const where = site.whereToFind || [];
+    $('whereWrap').hidden = where.length === 0;
+    items($('whereToFind'), where);
+
+    const spots = site.pickupSpots || [];
+    $('pickupWrap').hidden = spots.length === 0 && !(site.pickupNote || '').trim();
+    $('pickupTitle').textContent = site.pickupTitle || 'Pickup';
+    items($('pickupSpots'), spots);
+    $('pickupNote').textContent = site.pickupNote || '';
+    const spotSel = $('askSpot'); const prevSpot = spotSel.value; spotSel.replaceChildren();
+    spots.forEach((s) => { const o = document.createElement('option'); o.value = s; o.textContent = s; spotSel.appendChild(o); });
+    const either = document.createElement('option'); either.value = ''; either.textContent = 'Either is fine'; spotSel.appendChild(either);
+    if (prevSpot && Array.from(spotSel.options).some((o) => o.value === prevSpot)) spotSel.value = prevSpot;
+    $('askSpotWrap').hidden = spots.length === 0;
+
+    const nd = Number(site.noticeDays) || 0;
+    if (nd > 0) {
+      const d = new Date(); d.setDate(d.getDate() + nd);
+      const when = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+      $('noticeHint').textContent = 'I need ' + (nd === 7 ? 'a week' : nd + ' days') + '’s notice, so the earliest is ' + when + '.';
+    } else { $('noticeHint').textContent = ''; }
+
+    const cl = (site.contactLabel || '').trim(), cv = (site.contactValue || '').trim();
+    $('contact').hidden = !cv;
+    $('contactLabel').textContent = cl || 'Send it to';
+    $('contactValue').textContent = cv;
+    $('contactFallback').hidden = !!cv;
+
+    const faq = site.faq || [];
+    $('faqSection').hidden = faq.length === 0;
+    $('faqTitle').textContent = site.faqTitle || 'Good to know';
+    const fw = $('faq'); fw.replaceChildren();
+    faq.forEach((f) => {
+      const d = document.createElement('details');
+      const s = document.createElement('summary'); s.textContent = f.q || '';
+      const p = document.createElement('p'); p.textContent = f.a || '';
+      d.append(s, p); fw.appendChild(d);
+    });
+
+    $('aboutTitle').textContent = site.aboutTitle || 'About';
+    paras($('aboutBody'), site.aboutBody);
+    $('footerNote').textContent = site.footerNote || '';
+    buildMessage();
+    applyFormMode();
+  }
+
+  function renderBreads() {
+    const wrap = $('breads');
+    wrap.replaceChildren();
+    const list = breads.slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+    const sel = $('askWhich');
+    const prev = sel.value;
+    sel.replaceChildren();
+    list.filter((b) => b.available !== false).forEach((b) => {
+      const o = document.createElement('option'); o.value = b.id; o.textContent = b.name || b.id; sel.appendChild(o);
+    });
+    if (prev && Array.from(sel.options).some((o) => o.value === prev)) sel.value = prev;
+    $('askWhichWrap').hidden = sel.options.length < 2;
+    buildMessage();
+    wrap.hidden = list.length === 0;
+    list.forEach((b) => {
+      const d = document.createElement('div');
+      d.className = 'bread' + (b.available === false ? ' off' : '');
+      const n = document.createElement('div'); n.className = 'name'; n.textContent = b.name || '';
+      const pr = document.createElement('div'); pr.className = 'price';
+      if (b.available === false) { const s = document.createElement('span'); s.className = 'pill'; s.textContent = 'Not this week'; pr.appendChild(s); }
+      else if (b.suggestedPrice != null) pr.textContent = 'Suggested $' + b.suggestedPrice + ' · pay what you can';
+      else pr.textContent = 'Pay what you can';
+      const ds = document.createElement('div'); ds.className = 'desc'; ds.textContent = b.description || '';
+      d.append(n, pr); if (b.description) d.appendChild(ds);
+      wrap.appendChild(d);
+    });
+  }
+
+  function unitFor(b, count) {
+    const u = (b && b.unit) || 'loaf';
+    const plural = (b && b.unitPlural) || (u === 'loaf' ? 'loaves' : u + 's');
+    return count === 1 ? u : plural;
+  }
+
+  function buildMessage() {
+    const name = $('askName').value.trim();
+    const count = Math.max(1, parseInt($('askCount').value, 10) || 1);
+    const when = $('askWhen').value.trim();
+    const note = $('askNote').value.trim();
+    const sel = $('askWhich');
+    const chosen = breads.find((b) => b.id === sel.value) || breads[0];
+    const what = chosen ? chosen.name : ((site && site.headline) ? site.headline : 'friendship bread');
+    let m = 'Hi Kathleen, I’d like ' + count + ' ' + unitFor(chosen, count) + ' of ' + what;
+    m += when ? ', ' + when + '.' : '.';
+    const spot = $('askSpot').value;
+    if (!$('askSpotWrap').hidden) m += ' I can pick up ' + (spot ? 'at the ' + spot : 'at either spot') + ' in ' + ((site && site.pickupTown) || 'Kingston') + '.';
+    const addr = site ? (site.contactValue || '').trim() : '';
+    const eb = $('emailBtn');
+    if (addr.includes('@') && !formConfigured()) {
+      eb.hidden = false;
+      eb.href = 'mailto:' + addr + '?subject=' + encodeURIComponent('Bread: ' + count + ' ' + unitFor(chosen, count) + ' of ' + what) + '&body=' + encodeURIComponent(m + (note ? '\n' + note : '') + '\nThanks!' + (name ? '\n— ' + name : ''));
+    } else { eb.hidden = true; }
+    if (note) m += '\n' + note;
+    m += '\nThanks!' + (name ? '\n— ' + name : '');
+    $('askMsg').textContent = m;
+    return m;
+  }
+  ['askName', 'askCount', 'askWhen', 'askNote'].forEach((id) => $(id).addEventListener('input', buildMessage));
+  $('askWhich').addEventListener('change', buildMessage);
+  $('askSpot').addEventListener('change', buildMessage);
+  $('copyAddrBtn').addEventListener('click', () => {
+    copyText($('contactValue').textContent, $('contactValue'), $('addrStatus'), 'Address copied.');
+  });
+
+  async function copyText(text, el, status, okMsg) {
+    try {
+      await navigator.clipboard.writeText(text);
+      status.textContent = okMsg;
+    } catch (err) {
+      if (el) { const r = document.createRange(); r.selectNodeContents(el); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      status.textContent = 'Selected. Copy it yourself.';
+    }
+  }
+
+  function formConfigured() { return !!(site && site.form && site.form.key && site.form.provider); }
+  function applyFormMode() {
+    const on = formConfigured();
+    $('sendBtn').hidden = !on;
+    $('emailBtn').hidden = on || $('emailBtn').hidden;
+    $('askIntro').textContent = on ? 'Fill this in and press send. It comes straight to my email.' : 'Fill this in, then send me the message. I\'ll write back to set the day.';
+  }
+  $('copyBtn').addEventListener('click', () => copyText(buildMessage(), $('askMsg'), $('copyStatus'), 'Copied.'));
+  $('askForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!formConfigured()) { copyText(buildMessage(), $('askMsg'), $('copyStatus'), 'Copied. Now send it to me.'); return; }
+    if ($('botcheck').checked) return;
+    const m = buildMessage();
+    const name = $('askName').value.trim();
+    if (!name) { $('copyStatus').textContent = 'Add your name so I know who to write back to.'; $('askName').focus(); return; }
+    const reply = $('askReply').value.trim();
+    if (!reply) { $('copyStatus').textContent = 'Add an email or phone number so I can reach you.'; $('askReply').focus(); return; }
+    const f = site.form;
+    const fields = {
+      name, reply, bread: ($('askWhich').selectedOptions[0] || {}).textContent || '', count: $('askCount').value,
+      week: $('askWhen').value.trim(), spot: $('askSpot').value || 'Either', note: $('askNote').value.trim(), message: m,
+    };
+    const btn = $('sendBtn'); btn.disabled = true; $('copyStatus').textContent = 'Sending\u2026';
+    try {
+      let res;
+      if (f.provider === 'web3forms') {
+        res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.assign({ access_key: f.key, subject: 'Bread request from ' + name, from_name: 'Bread page', replyto: reply.includes('@') ? reply : undefined, botcheck: '' }, fields)) });
+      } else {
+        res = await fetch('https://formspree.io/f/' + f.key, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.assign({ _subject: 'Bread request from ' + name, _replyto: reply.includes('@') ? reply : undefined }, fields)) });
+      }
+      if (!res.ok) throw new Error('status ' + res.status);
+      $('sentBox').hidden = false; $('copyStatus').textContent = '';
+      $('askNote').value = ''; $('askWhen').value = ''; buildMessage();
+      $('sentBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      console.error(err);
+      $('copyStatus').textContent = 'That didn\'t go through. Copy the message and email it to me instead.';
+      $('emailBtn').hidden = !((site.contactValue || '').includes('@'));
+    } finally { btn.disabled = false; }
+  });
+  $('shareBtn').addEventListener('click', () => {
+    copyText(location.href.split('#')[0], null, $('shareStatus'), 'Link copied.');
+  });
+
+  // Hide the floating button once the ask box is on screen.
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { $('floatAsk').hidden = en.isIntersecting; });
+    }, { threshold: 0.15 });
+    io.observe($('askForm'));
+  }
+
+  buildMessage();
+
+  async function start() {
+    try {
+      const [s, b] = await Promise.all([
+        fetch('content/site.json', { cache: 'no-cache' }).then((r) => r.json()),
+        fetch('content/breads.json', { cache: 'no-cache' }).then((r) => r.json()),
+      ]);
+      site = s; breads = Array.isArray(b) ? b : [];
+      renderSite(); renderBreads(); applyFormMode();
+    } catch (err) {
+      console.error(err);
+      $('intro').textContent = 'The page\u2019s words didn\u2019t load. Try again in a moment.';
+      $('intro').classList.remove('loading');
+    }
+  }
+  start();
+})();
+</script>
+</body>
+</html>

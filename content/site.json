@@ -1,0 +1,96 @@
+{
+  "headline": "Organic Sourdough Friendship Bread",
+  "signTop": "ORGANIC SOURDOUGH FRIENDSHIP BREAD",
+  "signMiddle": "PAY WHAT YOU CAN",
+  "signBottom": "Suggested price $10",
+  "suggestedPrice": 10,
+  "intro": "Slow-fermented bread from a potato-flake starter, baked in a home kitchen in Roane County, Tennessee. Every loaf is made with organic ingredients.",
+  "payTitle": "Pay what you can",
+  "payBody": [
+    "The suggested price is $10 a loaf. That is what a loaf costs to make and bake, with a little left over to keep baking.",
+    "If that is more than you can do right now, pay what you can and take the bread home. No questions, no separate line.",
+    "If you can give a little more, it helps make bread available for someone who can't."
+  ],
+  "breadTitle": "What I bake",
+  "breadBody": [
+    "The regular loaf is Amish-style friendship bread, the kind that starts from a shared starter and gets passed along. Mine is a potato-flake starter fed with water and sugar, which gives the bread a soft crumb and a gentle sweetness. It ferments slowly instead of rising on fast yeast.",
+    "I also bake a plain sourdough, and I make a yeast spread. Ask which ones are coming out of the oven this week."
+  ],
+  "ingredients": [
+    "Organic flour",
+    "Organic sugar",
+    "Potato-flake starter",
+    "Water",
+    "A little oil",
+    "Salt"
+  ],
+  "getTitle": "How to get a loaf",
+  "getSteps": [
+    "Tell me which bread, how many, and the week you'd like it. I need a week's notice.",
+    "I bake it that week and let you know the day it's ready.",
+    "Meet me in Kingston to pick up. Pay what you can, and enjoy."
+  ],
+  "thisWeek": "",
+  "whereToFind": [],
+  "contactLabel": "Email me",
+  "contactValue": "sgtyuna@gmail.com",
+  "aboutTitle": "About",
+  "aboutBody": [
+    "I'm Kathleen. I live in East Tennessee with my two boys, and I bake to feed people.",
+    "This started as a few loaves for friends and neighbors. The hope is that it grows into a small bakery where everyone pays what they can and the people who can give more help keep the oven going for the people who can't."
+  ],
+  "footerNote": "Made in a home kitchen under Tennessee's cottage food rules. Not inspected by the Tennessee Department of Agriculture or Department of Health.",
+  "place": "Roane County, Tennessee",
+  "ingredientsLabel": "In the friendship bread",
+  "payCards": [
+    {
+      "amount": "$10",
+      "title": "The suggested price",
+      "body": "Covers the organic flour and sugar, the oven, and a little left over to keep baking."
+    },
+    {
+      "amount": "Less",
+      "title": "If money is tight",
+      "body": "Pay what you can and take the bread home. Same line, same bread, no questions."
+    },
+    {
+      "amount": "More",
+      "title": "If you have a little extra",
+      "body": "Anything over $10 goes toward a loaf for someone who couldn't pay the full price."
+    }
+  ],
+  "faqTitle": "Good to know",
+  "faq": [
+    {
+      "q": "Is the bread vegan?",
+      "a": "The friendship bread and the sourdough have no dairy or eggs: flour, sugar, starter, water, a little oil, and salt. Ask me about the yeast spread for the batch you're getting."
+    },
+    {
+      "q": "What about allergies?",
+      "a": "Everything is made with wheat flour in a home kitchen that also uses nuts, so I can't promise anything is free of them. Tell me what you need to avoid and I'll be honest about whether I can help."
+    },
+    {
+      "q": "How long does it keep?",
+      "a": "A loaf keeps on the counter about three days in a bag or wrapped in a towel. Sliced and frozen, it keeps for a couple of months. Toast straight from the freezer."
+    },
+    {
+      "q": "How far ahead should I ask?",
+      "a": "A week. The dough rises slowly and I bake to order, so I plan the week's loaves ahead and don't keep extras around."
+    },
+    {
+      "q": "Can I pay with cash?",
+      "a": "Yes. Cash is easiest. Ask if you'd rather pay another way."
+    }
+  ],
+  "noticeDays": 7,
+  "pickupTitle": "Pickup is in Kingston",
+  "pickupSpots": [
+    "Old Courthouse",
+    "Ferregate Community Center"
+  ],
+  "pickupNote": "We'll settle on the spot and time when you ask. I don't deliver yet.",
+  "form": {
+    "provider": "",
+    "key": ""
+  }
+}
