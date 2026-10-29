@@ -18,6 +18,8 @@
   --line: #d3cdbf;
   --accent: #2b5c7a;
   --accent-fg: #ffffff;
+  --good: #2f6b3a;
+  --short: #8a4b1f;
   --board: #2a2622;
   --chalk: #f4efe6;
   --chalk-dim: #d9d1c3;
@@ -28,13 +30,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #171411; --fg: #ece6da; --muted: #a39b8e; --panel: #221e1a; --panel-2: #2b2621; --line: #3a342d;
-    --accent: #8fb9d6; --accent-fg: #14212b; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
+    --accent: #8fb9d6; --accent-fg: #14212b; --good: #8fcf9a; --short: #e0a36f; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #171411; --fg: #ece6da; --muted: #a39b8e; --panel: #221e1a; --panel-2: #2b2621; --line: #3a342d;
-  --accent: #8fb9d6; --accent-fg: #14212b; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
+  --accent: #8fb9d6; --accent-fg: #14212b; --good: #8fcf9a; --short: #e0a36f; --board: #0f0d0b; --chalk: #f1ebe0; --chalk-dim: #b9b0a2;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -90,6 +92,11 @@ a { color: var(--accent); }
 .card h3 { font-size: 1rem; }
 .card p { font-size: .93rem; color: var(--muted); }
 
+.cards.stats { grid-template-columns: repeat(4, 1fr); margin-top: 0; }
+@media (max-width: 640px) { .cards.stats { grid-template-columns: 1fr 1fr; } }
+.cards.stats .card .amt { font-family: var(--body); font-size: 1.7rem; letter-spacing: -.01em; color: var(--fg); }
+.cards.stats .card.good .amt { color: var(--good); }
+.cards.stats .card.short .amt { color: var(--short); }
 /* Lists */
 ul.plain { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem .6rem; }
 ul.plain li { background: var(--panel); border-radius: 999px; padding: .25rem .8rem; font-size: .92rem; }
@@ -187,6 +194,13 @@ footer .actions { gap: .8rem; }
     <h2 id="payTitle">Pay what you can</h2>
     <div class="stack" id="payBody"></div>
     <div class="cards" id="payCards"></div>
+  </section>
+
+  <section id="statsSection" hidden>
+    <h2 id="statsTitle">How it's going</h2>
+    <p class="muted" id="statsBody" style="margin-bottom:1rem"></p>
+    <div class="cards stats" id="statsCards"></div>
+    <p class="status" id="statsFoot" style="margin-top:.75rem"></p>
   </section>
 
   <section id="breadSection">
@@ -510,6 +524,69 @@ footer .actions { gap: .8rem; }
 
   buildMessage();
 
+  function parseCsv(text) {
+    const rows = []; let row = [], cell = '', q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(cell); cell = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+      else cell += c;
+    }
+    if (cell.length || row.length) { row.push(cell); rows.push(row); }
+    const head = (rows.shift() || []).map((x) => x.trim().toLowerCase());
+    return rows.filter((r) => r.some((x) => x.trim())).map((r) => { const o = {}; head.forEach((k, i) => { o[k] = (r[i] || '').trim(); }); return o; });
+  }
+  function money(n) {
+    const v = Math.round((n || 0) * 100) / 100;
+    return '$' + Math.abs(v).toLocaleString(undefined, { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  }
+  function toISODate(s) {
+    s = (s || '').trim(); if (!s) return '';
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+    const d = new Date(s); return isNaN(d) ? '' : isoDate(d);
+  }
+  function suggestedFor(breadName) {
+    const n = (breadName || '').toLowerCase();
+    const b = breads.find((x) => x.id === n || (x.name || '').toLowerCase() === n) || breads.find((x) => n && (x.name || '').toLowerCase().includes(n));
+    return b && b.suggestedPrice != null ? Number(b.suggestedPrice) : null;
+  }
+  async function loadStats() {
+    const cfg = (site && site.stats) || {};
+    const sec = $('statsSection');
+    if (!cfg.source) { sec.hidden = true; return; }
+    try {
+      const txt = await fetch(cfg.source, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); });
+      const rows = parseCsv(txt).map((r) => ({
+        date: toISODate(r.date || r.day || r.timestamp), bread: r.bread || r.what || '', qty: Number(r.qty || r.count || r.loaves || 1) || 1,
+        paid: Number(String(r.paid || r.amount || '').replace(/[^0-9.\-]/g, '')) || 0,
+        suggested: r.suggested !== undefined && r.suggested !== '' ? Number(r.suggested) : null,
+      })).filter((r) => r.date);
+      const now = new Date(); const ym = isoDate(now).slice(0, 7);
+      let loavesAll = 0, moneyMonth = 0, loavesMonth = 0, extra = 0, short = 0, first = '';
+      rows.forEach((r) => {
+        loavesAll += r.qty;
+        if (!first || r.date < first) first = r.date;
+        if (r.date.slice(0, 7) === ym) { moneyMonth += r.paid; loavesMonth += r.qty; }
+        const sug = r.suggested != null ? r.suggested : suggestedFor(r.bread);
+        if (sug != null) { const e = r.paid - sug * r.qty; if (e > 0) extra += e; else short += -e; }
+      });
+      $('statsTitle').textContent = cfg.title || "How it's going";
+      $('statsBody').textContent = cfg.body || '';
+      const cards = $('statsCards'); cards.replaceChildren();
+      const tile = (amt, title, body, cls) => { const d = document.createElement('div'); d.className = 'card' + (cls ? ' ' + cls : '');
+        const a = document.createElement('div'); a.className = 'amt'; a.textContent = amt; const hh = document.createElement('h3'); hh.textContent = title;
+        const p = document.createElement('p'); p.textContent = body || ''; d.append(a, hh, p); cards.appendChild(d); };
+      tile(loavesAll.toLocaleString(), 'Loaves so far', loavesMonth ? loavesMonth + ' this month' : '');
+      if (cfg.showMoney !== false) tile(money(moneyMonth), 'Money this month', 'What people paid, all together');
+      tile(money(extra), 'Given above the suggested price', 'From people who had a little extra', 'good');
+      tile(money(short), 'Bread given below it', 'Covered by the extra', 'short');
+      $('statsFoot').textContent = rows.length ? 'Counted from ' + rows.length + (rows.length === 1 ? ' sale' : ' sales') + (first ? ' since ' + niceDate(first) : '') + '.' : 'No sales recorded yet.';
+      sec.hidden = false;
+    } catch (err) { console.error('stats', err); sec.hidden = true; }
+  }
+
   async function start() {
     try {
       const [s, b] = await Promise.all([
@@ -517,7 +594,7 @@ footer .actions { gap: .8rem; }
         fetch('content/breads.json', { cache: 'no-cache' }).then((r) => r.json()),
       ]);
       site = s; breads = Array.isArray(b) ? b : [];
-      renderSite(); renderBreads(); applyFormMode();
+      renderSite(); renderBreads(); applyFormMode(); loadStats();
     } catch (err) {
       console.error(err);
       $('intro').textContent = 'The page\u2019s words didn\u2019t load. Try again in a moment.';

@@ -81,5 +81,11 @@
   "form": {
     "provider": "formspree",
     "key": "mzeevpwe"
+  },
+  "stats": {
+    "source": "",
+    "showMoney": true,
+    "title": "How it's going",
+    "body": "Pay what you can only works if it's out in the open. These numbers come straight from the sales list and update on their own."
   }
 }
