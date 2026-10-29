@@ -90,7 +90,7 @@
   ],
   "pickupNote": "We'll settle on the spot and time when you ask. I don't deliver yet.",
   "form": {
-    "provider": "",
-    "key": ""
+    "provider": "formspree",
+    "key": "mzeevpwe"
   }
 }
