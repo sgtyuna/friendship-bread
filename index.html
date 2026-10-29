@@ -220,7 +220,7 @@ footer .actions { gap: .8rem; }
       <label>How should I reach you back?<input id="askReply" name="reply" type="text" placeholder="Email or phone number" autocomplete="email"></label>
       <label id="askWhichWrap" hidden>Which one<select id="askWhich" name="which"></select></label>
       <div class="row">
-        <label>Which week?<input id="askWhen" name="when" type="text" placeholder="The week of…"><span class="status" id="noticeHint" style="font-weight:400"></span></label>
+        <label>Pickup day<input id="askWhen" name="when" type="date"><span class="status" id="noticeHint" style="font-weight:400"></span></label>
         <label id="askSpotWrap" hidden>Pickup spot<select id="askSpot" name="spot"></select></label>
       </div>
       <label>Anything else<textarea id="askNote" name="note" placeholder="Allergies, a question, or how you'd like to pick up"></textarea></label>
@@ -272,6 +272,12 @@ footer .actions { gap: .8rem; }
   let site = null;
   let breads = [];
 
+  function isoDate(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function niceDate(iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    if (!m) return iso || '';
+    return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+  }
   function paras(el, arr) {
     el.replaceChildren();
     (arr || []).forEach((t) => { const p = document.createElement('p'); p.textContent = t; el.appendChild(p); });
@@ -333,11 +339,12 @@ footer .actions { gap: .8rem; }
     $('askSpotWrap').hidden = spots.length === 0;
 
     const nd = Number(site.noticeDays) || 0;
+    const d = new Date(); d.setDate(d.getDate() + nd);
+    $('askWhen').min = isoDate(d);
     if (nd > 0) {
-      const d = new Date(); d.setDate(d.getDate() + nd);
       const when = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-      $('noticeHint').textContent = 'I need ' + (nd === 7 ? 'a week' : nd + ' days') + '’s notice, so the earliest is ' + when + '.';
-    } else { $('noticeHint').textContent = ''; }
+      $('noticeHint').textContent = 'I need ' + (nd === 7 ? 'a week' : nd + ' days') + '’s notice, so the earliest is ' + when + '. Tap to pick a day.';
+    } else { $('noticeHint').textContent = 'Tap to pick a day.'; }
 
     const cl = (site.contactLabel || '').trim(), cv = (site.contactValue || '').trim();
     $('contact').hidden = !cv;
@@ -406,7 +413,7 @@ footer .actions { gap: .8rem; }
     const chosen = breads.find((b) => b.id === sel.value) || breads[0];
     const what = chosen ? chosen.name : ((site && site.headline) ? site.headline : 'friendship bread');
     let m = 'Hi Kathleen, I’d like ' + count + ' ' + unitFor(chosen, count) + ' of ' + what;
-    m += when ? ', ' + when + '.' : '.';
+    m += when ? ', for pickup on ' + niceDate(when) + '.' : '.';
     const spot = $('askSpot').value;
     if (!$('askSpotWrap').hidden) m += ' I can pick up ' + (spot ? 'at the ' + spot : 'at either spot') + ' in ' + ((site && site.pickupTown) || 'Kingston') + '.';
     const addr = site ? (site.contactValue || '').trim() : '';
@@ -420,7 +427,7 @@ footer .actions { gap: .8rem; }
     $('askMsg').textContent = m;
     return m;
   }
-  ['askName', 'askCount', 'askWhen', 'askNote'].forEach((id) => $(id).addEventListener('input', buildMessage));
+  ['askName', 'askCount', 'askWhen', 'askNote'].forEach((id) => { $(id).addEventListener('input', buildMessage); $(id).addEventListener('change', buildMessage); });
   $('askWhich').addEventListener('change', buildMessage);
   $('askSpot').addEventListener('change', buildMessage);
   $('copyAddrBtn').addEventListener('click', () => {
@@ -452,12 +459,14 @@ footer .actions { gap: .8rem; }
     const m = buildMessage();
     const name = $('askName').value.trim();
     if (!name) { $('copyStatus').textContent = 'Add your name so I know who to write back to.'; $('askName').focus(); return; }
+    const wv = $('askWhen').value;
+    if (wv && $('askWhen').min && wv < $('askWhen').min) { $('copyStatus').textContent = 'That day is too soon. The earliest is ' + niceDate($('askWhen').min) + '.'; $('askWhen').focus(); return; }
     const reply = $('askReply').value.trim();
     if (!reply) { $('copyStatus').textContent = 'Add an email or phone number so I can reach you.'; $('askReply').focus(); return; }
     const f = site.form;
     const fields = {
       name, reply, bread: ($('askWhich').selectedOptions[0] || {}).textContent || '', count: $('askCount').value,
-      week: $('askWhen').value.trim(), spot: $('askSpot').value || 'Either', note: $('askNote').value.trim(), message: m,
+      pickup_day: niceDate($('askWhen').value.trim()), spot: $('askSpot').value || 'Either', note: $('askNote').value.trim(), message: m,
     };
     const btn = $('sendBtn'); btn.disabled = true; $('copyStatus').textContent = 'Sending\u2026';
     try {
