@@ -16,13 +16,11 @@
     "order": 2
   },
   {
-    "id": "yeast-spread",
-    "name": "Yeast Spread",
-    "description": "",
+    "id": "yeast-bread",
+    "name": "Yeast Bread",
+    "description": "A soft everyday loaf, risen with yeast instead of starter.",
     "suggestedPrice": null,
     "available": true,
-    "order": 3,
-    "unit": "jar",
-    "unitPlural": "jars"
+    "order": 3
   }
 ]
