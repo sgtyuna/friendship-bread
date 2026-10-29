@@ -4,7 +4,7 @@
   "signMiddle": "PAY WHAT YOU CAN",
   "signBottom": "Suggested price $10",
   "suggestedPrice": 10,
-  "intro": "Slow-fermented, plant-based bread from a potato-flake starter, baked in a home kitchen in Roane County, Tennessee. Every loaf is made with organic ingredients.",
+  "intro": "Slow-fermented bread from a potato-flake starter, baked in a home kitchen in Roane County, Tennessee. Every loaf is made with organic ingredients, and what goes in each one is listed below.",
   "payTitle": "Pay what you can",
   "payBody": [
     "The suggested price is $10 a loaf. That is what a loaf costs to make and bake, with a little left over to keep baking.",
@@ -16,14 +16,7 @@
     "The regular loaf is Amish-style friendship bread, the kind that starts from a shared starter and gets passed along. Mine is a potato-flake starter fed with water and sugar, which gives the bread a soft crumb and a gentle sweetness. It ferments slowly instead of rising on fast yeast.",
     "I also bake a plain sourdough and a yeast bread. Ask which ones are coming out of the oven this week."
   ],
-  "ingredients": [
-    "Organic flour",
-    "Organic sugar",
-    "Potato-flake starter",
-    "Water",
-    "A little oil",
-    "Salt"
-  ],
+  "ingredients": [],
   "getTitle": "How to get a loaf",
   "getSteps": [
     "Tell me which bread, how many, and the week you'd like it. I need a week's notice.",
@@ -61,10 +54,6 @@
   ],
   "faqTitle": "Good to know",
   "faq": [
-    {
-      "q": "Is the bread plant-based?",
-      "a": "Yes, all of it. No dairy, no eggs, no honey. The friendship bread is flour, sugar, potato-flake starter, water, a little oil, and salt."
-    },
     {
       "q": "What about allergies?",
       "a": "Everything is made with wheat flour in a home kitchen that also uses nuts, so I can't promise anything is free of them. Tell me what you need to avoid and I'll be honest about whether I can help."
