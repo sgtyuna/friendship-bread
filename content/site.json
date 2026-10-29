@@ -4,7 +4,7 @@
   "signMiddle": "PAY WHAT YOU CAN",
   "signBottom": "Suggested price $10",
   "suggestedPrice": 10,
-  "intro": "Slow-fermented bread from a potato-flake starter, baked in a home kitchen in Roane County, Tennessee. Every loaf is made with organic ingredients.",
+  "intro": "Slow-fermented, plant-based bread from a potato-flake starter, baked in a home kitchen in Roane County, Tennessee. Every loaf is made with organic ingredients.",
   "payTitle": "Pay what you can",
   "payBody": [
     "The suggested price is $10 a loaf. That is what a loaf costs to make and bake, with a little left over to keep baking.",
@@ -62,8 +62,8 @@
   "faqTitle": "Good to know",
   "faq": [
     {
-      "q": "Is the bread vegan?",
-      "a": "The friendship bread and the sourdough have no dairy or eggs: flour, sugar, starter, water, a little oil, and salt. Ask me about the yeast bread for the batch you're getting."
+      "q": "Is the bread plant-based?",
+      "a": "Yes, all of it. No dairy, no eggs, no honey. The friendship bread is flour, sugar, potato-flake starter, water, a little oil, and salt."
     },
     {
       "q": "What about allergies?",
